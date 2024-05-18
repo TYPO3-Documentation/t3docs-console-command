@@ -1,0 +1,41 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method T3Docs\\\\ConsoleCommand\\\\Nodes\\\\CommandNode\\:\\:__construct\\(\\) has parameter \\$argumentList with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../../src/Nodes/CommandNode.php
+
+		-
+			message: "#^Method T3Docs\\\\ConsoleCommand\\\\Nodes\\\\CommandNode\\:\\:__construct\\(\\) has parameter \\$help with generic class phpDocumentor\\\\Guides\\\\Nodes\\\\CompoundNode but does not specify its types\\: TValue$#"
+			count: 1
+			path: ../../src/Nodes/CommandNode.php
+
+		-
+			message: "#^Method T3Docs\\\\ConsoleCommand\\\\Nodes\\\\CommandNode\\:\\:__construct\\(\\) has parameter \\$optionList with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../../src/Nodes/CommandNode.php
+
+		-
+			message: "#^Method T3Docs\\\\ConsoleCommand\\\\Nodes\\\\CommandNode\\:\\:__construct\\(\\) has parameter \\$usage with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../../src/Nodes/CommandNode.php
+
+		-
+			message: "#^Method T3Docs\\\\ConsoleCommand\\\\Nodes\\\\CommandNode\\:\\:getArgumentList\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../../src/Nodes/CommandNode.php
+
+		-
+			message: "#^Method T3Docs\\\\ConsoleCommand\\\\Nodes\\\\CommandNode\\:\\:getHelp\\(\\) return type with generic class phpDocumentor\\\\Guides\\\\Nodes\\\\CompoundNode does not specify its types\\: TValue$#"
+			count: 1
+			path: ../../src/Nodes/CommandNode.php
+
+		-
+			message: "#^Method T3Docs\\\\ConsoleCommand\\\\Nodes\\\\CommandNode\\:\\:getOptionList\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../../src/Nodes/CommandNode.php
+
+		-
+			message: "#^Method T3Docs\\\\ConsoleCommand\\\\Nodes\\\\CommandNode\\:\\:getUsage\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../../src/Nodes/CommandNode.php

@@ -11,8 +11,12 @@ rector: ## Run rector
 fix-cs: ## Fix PHP coding styles
 	Build/Scripts/runTests.sh -s cgl
 
+.PHONY: composer-normalize
+fix-cs: ## Normalize composer.json
+	Build/Scripts/runTests.sh -s composerNormalize
+
 .PHONY: fix ## Fix PHP: rector and coding styles
-fix: rector fix-cs
+fix: rector fix-cs composer-normalize
 
 .PHONY: phpstan
 phpstan: ## Run phpstan tests
