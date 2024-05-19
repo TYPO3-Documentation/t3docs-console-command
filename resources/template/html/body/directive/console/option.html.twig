@@ -1,0 +1,37 @@
+<dl class="option">
+    <dt{% if not node.noindex %} id="{{ node.anchor }}"{% endif -%}>
+        <code class="sig-name descname"><span class="pre">{{ node.plainContent }}
+                {%- if node.shortcut %} / {{ node.shortcut }}{% endif -%}
+            </span></code>
+        {% if not node.noindex %}
+            <a class="headerlink" href="#{{ node.anchor }}" data-bs-toggle="modal" data-bs-target="#linkReferenceModal" data-id="{{ node.anchor }}" data-rstCode="{{ getRstCodeForLink(node) }}"  title="Reference this configuration value">¶</a>
+        {% else %}
+            <span class="headerNoindex" title="This argument cannot be linked directly. Consider to link to the section above."><i class="fa-solid fa-link-slash"></i></span>
+        {% endif -%}
+    </dt>
+    <dd>
+        <div class="argument-description">
+            {{ node.description }}
+        </div>
+        <dl class="field-list simple">
+            <dt class="field-even">Value</dt>
+            <dd class="field-even">
+                {%- if node.isValueRequired %}Required
+                {%- elseif node.acceptValue %}Optional
+                {%- else %}None allowed{% endif %}
+                {%- if node.isMultipe %} (multiple){% endif %}
+            </dd>
+            {% if node.default != null %}
+                <dt class="field-even">Default value</dt>
+                <dd class="field-even">
+                    {{ node.default }}
+                </dd>
+            {% endif -%}
+        </dl>
+        {% if node.value %}
+        <div class="command-description-extended">
+            {{ renderNode(node.value) }}
+        </div>
+        {% endif %}
+    </dd>
+</dl>

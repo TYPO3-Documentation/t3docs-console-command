@@ -1,0 +1,50 @@
+<dl class="command">
+    <dt{% if not node.noindex %} id="{{ node.anchor }}"{% endif -%}>
+        <code class="sig-name descname"><span class="pre">{{ node.plainContent }}</span></code>
+        {% if not node.noindex %}
+            <a class="headerlink" href="#{{ node.anchor }}" data-bs-toggle="modal" data-bs-target="#linkReferenceModal" data-id="{{ node.anchor }}" data-rstCode="{{ getRstCodeForLink(node) }}"  title="Reference this configuration value">¶</a>
+        {% else %}
+            <span class="headerNoindex" title="This command cannot be linked directly. Consider to link to the section above."><i class="fa-solid fa-link-slash"></i></span>
+        {% endif -%}
+    </dt>
+    <dd>
+        <div class="command-description">
+            {{ node.description }}
+        </div>
+        {% if node.usage %}
+            <div class="command-usage">
+                <div class="h4">Usage</div>
+                {% for item in node.usage %}
+                    {{ renderNode(item) }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if node.argumentList %}
+            <div class="command-arguments">
+                <div class="h4">Arguments</div>
+                {% for item in node.argumentList %}
+                    {{ renderNode(item) }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if node.optionList %}
+            <div class="command-options">
+                <div class="h4">Options</div>
+                {% for item in node.optionList %}
+                    {{ renderNode(item) }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if node.help %}
+            <div class="command-description-help">
+                <div class="h4">Help</div>
+                {{ renderNode(node.help) }}
+            </div>
+        {% endif %}
+        {% if node.value %}
+        <div class="command-description-extended">
+            {{ renderNode(node.value) }}
+        </div>
+        {% endif %}
+    </dd>
+</dl>

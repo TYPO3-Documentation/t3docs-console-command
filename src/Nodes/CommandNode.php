@@ -11,8 +11,8 @@ use phpDocumentor\Guides\RestructuredText\Nodes\GeneralDirectiveNode;
 
 class CommandNode extends GeneralDirectiveNode implements LinkTargetNode, OptionalLinkTargetsNode, PrefixedLinkTargetNode
 {
-    public const LINK_TYPE = 'std:command';
-    public const LINK_PREFIX = 'command-';
+    public const LINK_TYPE = 'std:console:command';
+    public const LINK_PREFIX = 'console-command-';
     public function __construct(
         private readonly string $commandName,
         private readonly string $id,
@@ -25,7 +25,7 @@ class CommandNode extends GeneralDirectiveNode implements LinkTargetNode, Option
         private readonly array $optionList = [],
         private readonly bool $noindex = false,
     ) {
-        parent::__construct('command', $commandName, $content, $value);
+        parent::__construct('console:command', $commandName, $content, $value);
     }
 
     public function getCommandName(): string
