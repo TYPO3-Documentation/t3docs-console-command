@@ -89,6 +89,6 @@ class CommandNode extends GeneralDirectiveNode implements LinkTargetNode, Option
     }
     public function getAnchor(): string
     {
-        return $this->getPrefix() . '-' . $this->getId();
+        return $this->getPrefix() . $this->getId();
     }
 }

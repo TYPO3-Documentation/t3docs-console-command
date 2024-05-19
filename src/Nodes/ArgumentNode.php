@@ -83,6 +83,6 @@ class ArgumentNode extends GeneralDirectiveNode implements LinkTargetNode, Optio
 
     public function getAnchor(): string
     {
-        return $this->getPrefix() . '-' . $this->getId();
+        return $this->getPrefix() . $this->getId();
     }
 }

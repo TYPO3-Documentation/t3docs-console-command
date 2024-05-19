@@ -10,7 +10,9 @@ use phpDocumentor\Guides\RestructuredText\Parser\Directive;
 use phpDocumentor\Guides\RestructuredText\Parser\Productions\Rule;
 use phpDocumentor\Guides\RestructuredText\TextRoles\GenericLinkProvider;
 use Psr\Log\LoggerInterface;
+use T3Docs\ConsoleCommand\Nodes\ArgumentNode;
 use T3Docs\ConsoleCommand\Nodes\CommandNode;
+use T3Docs\ConsoleCommand\Nodes\OptionNode;
 use T3Docs\ConsoleCommand\Service\CommandNodeService;
 use T3Docs\ConsoleCommand\Service\JsonLoadingService;
 
@@ -26,6 +28,8 @@ final class CommandDirective extends SubDirective
     ) {
         parent::__construct($startingRule);
         $genericLinkProvider->addGenericLink(self::NAME, CommandNode::LINK_TYPE, CommandNode::LINK_PREFIX);
+        $genericLinkProvider->addGenericLink(self::NAME, ArgumentNode::LINK_TYPE, ArgumentNode::LINK_PREFIX);
+        $genericLinkProvider->addGenericLink(self::NAME, OptionNode::LINK_TYPE, OptionNode::LINK_PREFIX);
     }
 
     protected function processSub(
