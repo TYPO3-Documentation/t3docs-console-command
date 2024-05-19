@@ -14,7 +14,7 @@ class DirectiveParameterService
         $excludedOptions = [];
         if ($directive->hasOption($argument)) {
             $excludedOptions = array_map(fn($value) => // Trim spaces, tabs, newlines, and minus signs
-            trim($value, " \t\n\r\0\x0B-"), explode(',', $directive->getOption('exclude-option')->toString()));
+            trim($value, " \t\n\r\0\x0B-"), explode(',', $directive->getOption($argument)->toString()));
         }
         return $excludedOptions;
     }
@@ -26,7 +26,10 @@ class DirectiveParameterService
     {
         $includedOptions = null;
         if ($directive->hasOption($argument)) {
-            $includedOptions = array_map(fn($value) => trim($value, " \t\n\r\0\x0B-"), explode(',', $directive->getOption('include-option')->toString()));
+            $includedOptions = array_map(
+                fn($value) => trim($value, " \t\n\r\0\x0B-"),
+                explode(',', $directive->getOption($argument)->toString()),
+            );
             $includedOptions = array_filter($includedOptions);
         }
         return $includedOptions;
