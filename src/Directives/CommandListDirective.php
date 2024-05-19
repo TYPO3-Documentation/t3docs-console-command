@@ -74,8 +74,8 @@ final class CommandListDirective extends SubDirective
 
         $namespaceName = trim($directive->getData());
 
-        $excludeCommand = $this->directiveParameterService->getExcludedOptions($directive, 'exclude-option');
-        $includeCommand = $this->directiveParameterService->getIncludedOptions($directive, 'include-option');
+        $excludeCommand = $this->directiveParameterService->getExcludedOptions($directive, 'exclude-command');
+        $includeCommand = $this->directiveParameterService->getIncludedOptions($directive, 'include-command');
         $includeCommand = $this->getIncludesFromNamespace($includeCommand, $namespaceName, $json['namespaces'], $jsonPath, $blockContext);
         $commands = [];
         foreach ($json['commands'] as $command) {
