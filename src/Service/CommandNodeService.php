@@ -54,7 +54,10 @@ class CommandNodeService
         }
         $arguments = $this->extractArguments($command, $blockContext, $directive, $id);
         $options = $this->extractOptions($directive, $command, $blockContext, $id);
-        $helpNode = $this->getParsedText($command, 'help', $blockContext, $script);
+        $helpNode = null;
+        if (!$directive->hasOption('no-help')) {
+            $helpNode = $this->getParsedText($command, 'help', $blockContext, $script);
+        }
         return new CommandNode(
             $script . $commandName,
             $id,
