@@ -57,7 +57,6 @@ final class CommandListDirective extends SubDirective
         return $includeCommand;
     }
 
-
     protected function processSub(
         BlockContext $blockContext,
         CollectionNode $collectionNode,
@@ -72,7 +71,6 @@ final class CommandListDirective extends SubDirective
             return null;
         }
         $children = $collectionNode->getChildren();
-
 
         $namespaceName = trim($directive->getData());
 

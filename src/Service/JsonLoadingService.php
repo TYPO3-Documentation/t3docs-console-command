@@ -11,8 +11,7 @@ class JsonLoadingService
     public function __construct(
         private readonly LoggerInterface $logger,
         private readonly FileLoadingService $fileLoadingService,
-    )
-    {}
+    ) {}
 
     /**
      * @return array<mixed>|null
@@ -21,12 +20,11 @@ class JsonLoadingService
         BlockContext $blockContext,
         Directive $directive,
         string $optionName,
-    ): array|null
-    {
+    ): array|null {
         if (!$directive->hasOption($optionName)) {
             $this->logger->warning(
                 sprintf('Directive %s expects argument :%s: to be set. ', $directive->getName(), $optionName),
-                $blockContext->getLoggerInformation()
+                $blockContext->getLoggerInformation(),
             );
             return null;
         }
@@ -39,8 +37,7 @@ class JsonLoadingService
     public function loadJsonArrayFromAbsolutePath(
         BlockContext $blockContext,
         string $jsonPath,
-    ): array|null
-    {
+    ): array|null {
         $contents = $this->fileLoadingService->loadFile($jsonPath, $blockContext);
         if ($contents == null) {
             return null;

@@ -14,6 +14,7 @@ use T3Docs\ConsoleCommand\Service\DirectiveParameterService;
 use T3Docs\ConsoleCommand\Service\FileLoadingService;
 
 use T3Docs\ConsoleCommand\Service\JsonLoadingService;
+
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {

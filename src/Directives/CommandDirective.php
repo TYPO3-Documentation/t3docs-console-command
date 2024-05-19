@@ -28,7 +28,6 @@ final class CommandDirective extends SubDirective
         $genericLinkProvider->addGenericLink(self::NAME, CommandNode::LINK_TYPE, CommandNode::LINK_PREFIX);
     }
 
-
     protected function processSub(
         BlockContext $blockContext,
         CollectionNode $collectionNode,

@@ -13,17 +13,17 @@ class OptionNode extends GeneralDirectiveNode implements LinkTargetNode, Optiona
     public const LINK_TYPE = 'std:console:option';
     public const LINK_PREFIX = 'console-option-';
     public function __construct(
-        private readonly string               $optionName,
-        private readonly string               $id,
+        private readonly string $optionName,
+        private readonly string $id,
         protected readonly InlineCompoundNode $content,
-        array                                 $value = [],
-        private readonly string               $shortcut='',
-        private readonly bool                 $acceptValue = false,
-        private readonly bool                 $isValueRequired = false,
-        private readonly bool                 $isMultipe = false,
-        private readonly string               $description='',
-        private readonly ?string              $default=null,
-        private readonly bool                 $noIndex=false,
+        array $value = [],
+        private readonly string $shortcut = '',
+        private readonly bool $acceptValue = false,
+        private readonly bool $isValueRequired = false,
+        private readonly bool $isMultipe = false,
+        private readonly string $description = '',
+        private readonly ?string $default = null,
+        private readonly bool $noIndex = false,
     ) {
         parent::__construct('console:option', $optionName, $content, $value);
     }

@@ -18,7 +18,6 @@ use T3Docs\ConsoleCommand\Nodes\OptionNode;
 
 class CommandNodeService
 {
-
     /**
      * @param Rule<CollectionNode> $startingRule
      */
@@ -27,8 +26,7 @@ class CommandNodeService
         private readonly AnchorNormalizer $anchorReducer,
         private readonly LoggerInterface $logger,
         private readonly DirectiveParameterService $directiveParameterService,
-    ) {
-    }
+    ) {}
 
     /**
      * @param array<mixed> $command
@@ -42,7 +40,7 @@ class CommandNodeService
         }
         $script = '';
         if ($directive->hasOption('script')) {
-            $script = $directive->getOption('script')->toString().' ';
+            $script = $directive->getOption('script')->toString() . ' ';
         }
         $id = $this->anchorReducer->reduceAnchor($id);
         $usage = [];
@@ -60,7 +58,7 @@ class CommandNodeService
         return new CommandNode(
             $script . $commandName,
             $id,
-            $directive->getDataNode()??new InlineCompoundNode(),
+            $directive->getDataNode() ?? new InlineCompoundNode(),
             $children,
             $command['description'] ?? '',
             $helpNode,
@@ -74,29 +72,29 @@ class CommandNodeService
     /**
      * @param array<mixed> $option
      */
-    private function createOptionNode (string $optionName, array $option, string $commandId): OptionNode
+    private function createOptionNode(string $optionName, array $option, string $commandId): OptionNode
     {
-        $id = $this->anchorReducer->reduceAnchor($commandId.'-'.$optionName);
+        $id = $this->anchorReducer->reduceAnchor($commandId . '-' . $optionName);
         return new OptionNode(
             $optionName,
             $id,
             new InlineCompoundNode([new PlainTextInlineNode($optionName)]),
             [],
-            is_string($option['shortcut']??false)?$option['shortcut']:'',
+            is_string($option['shortcut'] ?? false) ? $option['shortcut'] : '',
             isset($option['accept_value']) && $option['accept_value'] === true,
             isset($option['is_value_required']) && $option['is_value_required'] === true,
             isset($option['is_multiple']) && $option['is_multiple'] === true,
-            is_string($option['description']??false)?$option['description']:'',
-            isset($option['default'])?json_encode($option['default'], JSON_PRETTY_PRINT):null,
+            is_string($option['description'] ?? false) ? $option['description'] : '',
+            isset($option['default']) ? json_encode($option['default'], JSON_PRETTY_PRINT) : null,
         );
     }
 
     /**
      * @param array<mixed> $argument
      */
-    private function createArgumentNode (Directive $directive, string $argumentName, array $argument, string $commandId): ArgumentNode
+    private function createArgumentNode(Directive $directive, string $argumentName, array $argument, string $commandId): ArgumentNode
     {
-        $id = $this->anchorReducer->reduceAnchor($commandId.'-'.$argumentName);
+        $id = $this->anchorReducer->reduceAnchor($commandId . '-' . $argumentName);
         return new ArgumentNode(
             $argumentName,
             $id,
@@ -104,8 +102,8 @@ class CommandNodeService
             [],
             isset($argument['is_value_required']) && $argument['is_value_required'] === true,
             isset($argument['is_array']) && $argument['is_array'] === true,
-            is_string($argument['description'])?$argument['description']:'',
-            isset($argument['description'])?((string)$argument['description']):null,
+            is_string($argument['description']) ? $argument['description'] : '',
+            isset($argument['description']) ? ((string)$argument['description']) : null,
             $directive->hasOption('noindexArguments'),
         );
     }
@@ -182,21 +180,21 @@ class CommandNodeService
         if (is_string($command[$field] ?? false)) {
             $text = $command[$field];
         }
-        $text = str_replace(['.Build/bin/typo3 ', '.Build/vendor/bin/typo3 ','bin/typo3 ', 'vendor/bin/typo3 '], $script, $text);
-        $text = preg_replace_callback('/-{3,}\n(.*?)*-{3,}/s', function($matches) {
+        $text = str_replace(['.Build/bin/typo3 ', '.Build/vendor/bin/typo3 ', 'bin/typo3 ', 'vendor/bin/typo3 '], $script, $text);
+        $text = preg_replace_callback('/-{3,}\n(.*?)*-{3,}/s', function ($matches) {
             $lines = explode("\n", trim($matches[0], '-'));
 
             $lines = array_map(fn($value) =>
                 // Trim spaces, tabs, newlines, and minus signs
-            '    '.$value, $lines);
+            '    ' . $value, $lines);
             return "::\n\n" . implode("\n", $lines);
         }, $text);
-        $text = preg_replace_callback('/<fg=yellow>(.*?)<\/(?:fg|)>/s', function($matches) {
+        $text = preg_replace_callback('/<fg=yellow>(.*?)<\/(?:fg|)>/s', function ($matches) {
             $lines = explode("\n", trim($matches[1], '-'));
 
             $lines = array_map(fn($value) =>
                 // Trim spaces, tabs, newlines, and minus signs
-                '    '.$value, $lines);
+                '    ' . $value, $lines);
             return "..  warning::\n" . implode("\n", $lines);
         }, $text);
         $text = preg_replace('/:\n\n\s+<info>(.*?)<\/(?:info|)>/', "::\n\n    $1", $text);
@@ -210,6 +208,5 @@ class CommandNodeService
         $subBlockContext = new BlockContext($blockContext->getDocumentParserContext(), $text);
         return $this->startingRule->apply($subBlockContext);
     }
-
 
 }

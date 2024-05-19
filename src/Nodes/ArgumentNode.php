@@ -19,9 +19,9 @@ class ArgumentNode extends GeneralDirectiveNode implements LinkTargetNode, Optio
         array $value = [],
         private readonly bool $isRequired = false,
         private readonly bool $isArray = false,
-        private readonly string $description='',
-        private readonly ?string $default=null,
-        private readonly bool $noIndex=false,
+        private readonly string $description = '',
+        private readonly ?string $default = null,
+        private readonly bool $noIndex = false,
     ) {
         parent::__construct('console:argument', $argumentName, $content, $value);
     }
