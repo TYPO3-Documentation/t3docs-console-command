@@ -92,4 +92,8 @@ class OptionNode extends GeneralDirectiveNode implements LinkTargetNode, Optiona
     {
         return $this->noIndex;
     }
+    public function getAnchor(): string
+    {
+        return $this->getPrefix() . $this->getId();
+    }
 }
