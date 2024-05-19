@@ -4,7 +4,7 @@
 reStructuredText directives for Symfony console command
 =======================================================
 
-This application is an extension of the
+This package is an extension of the application
 `phpdocumentor/guides <https://github.com/phpDocumentor/guides>`__.
 
 For usage in the TYPO3 documentation rendering read here:
