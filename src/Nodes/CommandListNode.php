@@ -15,7 +15,7 @@ class CommandListNode extends GeneralDirectiveNode implements LinkTargetNode, Op
 
     /**
      * @param CommandNode[] $commands
-     * @param array<string, CommandNode> $commandsByNamespace
+     * @param array<string, CommandNode[]> $commandsByNamespace
      */
     public function __construct(
         private readonly string $id,
@@ -64,11 +64,17 @@ class CommandListNode extends GeneralDirectiveNode implements LinkTargetNode, Op
         return $this->getPrefix() . $this->getId();
     }
 
+    /**
+     * @return CommandNode[]
+     */
     public function getCommands(): array
     {
         return $this->commands;
     }
 
+    /**
+     * @return array<string, CommandNode[]>
+     */
     public function getCommandsByNamespace(): array
     {
         return $this->commandsByNamespace;

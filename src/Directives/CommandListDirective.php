@@ -99,10 +99,10 @@ final class CommandListDirective extends SubDirective
                 continue;
             }
             $command = $this->commandNodeService->createCommandNode($blockContext, $commandName, $directive, $command, $children);
-            if (in_array($command->getNamespace(), $excludeNamespace)) {
+            if (in_array($command->getNamespace(), $excludeNamespace, true)) {
                 continue;
             }
-            if ($command->getNamespace() === '' && in_array('_global', $excludeNamespace)) {
+            if ($command->getNamespace() === '' && in_array('_global', $excludeNamespace, true)) {
                 continue;
             }
             $commands[] = $command;
