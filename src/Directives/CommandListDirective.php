@@ -3,13 +3,16 @@
 namespace T3Docs\ConsoleCommand\Directives;
 
 use phpDocumentor\Guides\Nodes\CollectionNode;
+use phpDocumentor\Guides\Nodes\InlineCompoundNode;
 use phpDocumentor\Guides\Nodes\Node;
+use phpDocumentor\Guides\ReferenceResolvers\AnchorNormalizer;
 use phpDocumentor\Guides\RestructuredText\Directives\SubDirective;
 use phpDocumentor\Guides\RestructuredText\Parser\BlockContext;
 use phpDocumentor\Guides\RestructuredText\Parser\Directive;
 use phpDocumentor\Guides\RestructuredText\Parser\Productions\Rule;
 use phpDocumentor\Guides\RestructuredText\TextRoles\GenericLinkProvider;
 use Psr\Log\LoggerInterface;
+use T3Docs\ConsoleCommand\Nodes\CommandListNode;
 use T3Docs\ConsoleCommand\Nodes\CommandNode;
 use T3Docs\ConsoleCommand\Service\CommandNodeService;
 use T3Docs\ConsoleCommand\Service\DirectiveParameterService;
@@ -25,6 +28,7 @@ final class CommandListDirective extends SubDirective
         private readonly CommandNodeService $commandNodeService,
         private readonly JsonLoadingService $jsonLoadingService,
         private readonly DirectiveParameterService $directiveParameterService,
+        private readonly AnchorNormalizer $anchorReducer,
     ) {
         parent::__construct($startingRule);
         $genericLinkProvider->addGenericLink(self::NAME, CommandNode::LINK_TYPE, CommandNode::LINK_PREFIX);
@@ -95,7 +99,36 @@ final class CommandListDirective extends SubDirective
             }
             $commands[] = $this->commandNodeService->createCommandNode($blockContext, $commandName, $directive, $command, $children);
         }
-        return new CollectionNode($commands);
+
+        $groupedByNamespace = [];
+
+        foreach ($commands as $command) {
+            $namespace = $command->getNamespace();
+            if (!isset($groupedByNamespace[$namespace])) {
+                $groupedByNamespace[$namespace] = [];
+            }
+            $groupedByNamespace[$namespace][] = $command;
+        }
+        ksort($groupedByNamespace);
+
+        $id = $directive->getOptionString(
+            'name',
+            $directive->getOptionString(
+                'caption',
+                $blockContext->getDocumentParserContext()->getDocument()->getFilePath(),
+            ),
+        );
+        $id = $this->anchorReducer->reduceAnchor($id);
+        return new CommandListNode(
+            $id,
+            $directive->getData(),
+            $directive->getDataNode() ?? new InlineCompoundNode(),
+            $commands,
+            $groupedByNamespace,
+            $directive->getOptionString('caption'),
+            $directive->getOptionBool('noindex'),
+            $showHidden,
+        );
     }
     public function getName(): string
     {

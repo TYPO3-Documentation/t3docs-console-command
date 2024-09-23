@@ -58,6 +58,11 @@ class CommandNodeService
         if (!$directive->hasOption('no-help')) {
             $helpNode = $this->getParsedText($command, 'help', $blockContext, $script);
         }
+        $namespace = '';
+        if (str_contains($commandName, ':')) {
+            $parts = explode(':', $commandName);
+            $namespace = $parts[0];
+        }
         return new CommandNode(
             $script . $commandName,
             $id,
@@ -69,6 +74,8 @@ class CommandNodeService
             $arguments,
             $options,
             $directive->hasOption('noindex'),
+            $namespace,
+            $command['hidden'] === true,
         );
     }
 

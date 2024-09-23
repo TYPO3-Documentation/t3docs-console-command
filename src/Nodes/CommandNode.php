@@ -24,6 +24,8 @@ class CommandNode extends GeneralDirectiveNode implements LinkTargetNode, Option
         private readonly array $argumentList = [],
         private readonly array $optionList = [],
         private readonly bool $noindex = false,
+        private readonly string $namespace = '',
+        private readonly bool $hidden = false,
     ) {
         parent::__construct('console:command', $commandName, $content, $value);
     }
@@ -90,5 +92,15 @@ class CommandNode extends GeneralDirectiveNode implements LinkTargetNode, Option
     public function getAnchor(): string
     {
         return $this->getPrefix() . $this->getId();
+    }
+
+    public function getNamespace(): string
+    {
+        return $this->namespace;
+    }
+
+    public function isHidden(): bool
+    {
+        return $this->hidden;
     }
 }
