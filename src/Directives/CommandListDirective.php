@@ -79,6 +79,7 @@ final class CommandListDirective extends SubDirective
         $namespaceName = trim($directive->getData());
 
         $excludeCommand = $this->directiveParameterService->getExcludedOptions($directive, 'exclude-command');
+        $excludeNamespace = $this->directiveParameterService->getExcludedNamespaces($directive, 'exclude-namespace');
         $includeCommand = $this->directiveParameterService->getIncludedOptions($directive, 'include-command');
         $includeCommand = $this->getIncludesFromNamespace($includeCommand, $namespaceName, $json['namespaces'], $jsonPath, $blockContext);
         $commands = [];
@@ -97,7 +98,14 @@ final class CommandListDirective extends SubDirective
             if (is_array($includeCommand) && !in_array($commandName, $includeCommand, true)) {
                 continue;
             }
-            $commands[] = $this->commandNodeService->createCommandNode($blockContext, $commandName, $directive, $command, $children);
+            $command = $this->commandNodeService->createCommandNode($blockContext, $commandName, $directive, $command, $children);
+            if (in_array($command->getNamespace(), $excludeNamespace)) {
+                continue;
+            }
+            if ($command->getNamespace() === '' && in_array('_global', $excludeNamespace)) {
+                continue;
+            }
+            $commands[] = $command;
         }
 
         $groupedByNamespace = [];
