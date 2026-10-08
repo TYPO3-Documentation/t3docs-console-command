@@ -2,9 +2,11 @@
 
 namespace T3Docs\ConsoleCommand\Nodes;
 
+use phpDocumentor\Guides\Nodes\CollectionNode;
 use phpDocumentor\Guides\Nodes\CompoundNode;
 use phpDocumentor\Guides\Nodes\InlineCompoundNode;
 use phpDocumentor\Guides\Nodes\LinkTargetNode;
+use phpDocumentor\Guides\Nodes\Node;
 use phpDocumentor\Guides\Nodes\OptionalLinkTargetsNode;
 use phpDocumentor\Guides\Nodes\PrefixedLinkTargetNode;
 use phpDocumentor\Guides\RestructuredText\Nodes\GeneralDirectiveNode;
@@ -19,7 +21,7 @@ class CommandNode extends GeneralDirectiveNode implements LinkTargetNode, Option
         protected readonly InlineCompoundNode $content,
         array $value = [],
         private readonly string $description = '',
-        private readonly ?CompoundNode $help = null,
+        private ?CompoundNode $help = null,
         private readonly array $usage = [],
         private readonly array $argumentList = [],
         private readonly array $optionList = [],
@@ -48,6 +50,54 @@ class CommandNode extends GeneralDirectiveNode implements LinkTargetNode, Option
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    /**
+     * The command's help comes after the directive's own content as a child
+     * of its own, so that the compiler reaches it as it does any content: a
+     * directive in the help, such as the "warning" a command's help may
+     * contain, is turned into its node only while compiling.
+     *
+     * @return Node[]
+     */
+    public function getChildren(): array
+    {
+        $children = parent::getChildren();
+        if ($this->help !== null) {
+            $children[] = $this->help;
+        }
+
+        return $children;
+    }
+
+    public function replaceNode(int $key, Node $node): self
+    {
+        if (!$this->isHelpKey($key)) {
+            return parent::replaceNode($key, $node);
+        }
+
+        $result = clone $this;
+        $result->help = $node instanceof CompoundNode ? $node : new CollectionNode([$node]);
+
+        return $result;
+    }
+
+    public function removeNode(int $key): self
+    {
+        if (!$this->isHelpKey($key)) {
+            return parent::removeNode($key);
+        }
+
+        $result = clone $this;
+        $result->help = null;
+
+        return $result;
+    }
+
+    /** Whether the child at this key is the help, which comes after the content. */
+    private function isHelpKey(int $key): bool
+    {
+        return $this->help !== null && $key === \count(parent::getChildren());
     }
 
     public function getHelp(): ?CompoundNode
